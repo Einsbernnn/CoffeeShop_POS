@@ -1,0 +1,5 @@
+Coffee Shop Sales Report
+Date: 07/19/2025
+Cashier: admin
+Total Sales: ₱1,305.00
+Total Orders: 1

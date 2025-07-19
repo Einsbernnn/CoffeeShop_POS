@@ -1,0 +1,1 @@
+java -cp src POSLogin //To start the program
