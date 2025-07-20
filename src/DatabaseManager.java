@@ -29,4 +29,17 @@ public class DatabaseManager {
             }
         }
     }
+
+    public static void main(String[] args) {
+        try (Connection conn = getConnection()) {
+            if (conn != null && !conn.isClosed()) {
+                System.out.println("Database connection successful!");
+            } else {
+                System.out.println("Failed to connect to the database.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error connecting to database: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 } 
