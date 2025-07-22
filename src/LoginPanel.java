@@ -15,75 +15,108 @@ public class LoginPanel extends JPanel {
     }
     
     public LoginPanel() {
-        setLayout(new BorderLayout());
-        setBackground(new Color(245, 245, 245));
+        setOpaque(false);
+        setLayout(new GridBagLayout());
         initComponents();
     }
     
     private void initComponents() {
+        JPanel cardPanel = new JPanel(new BorderLayout());
+        cardPanel.setBackground(Color.WHITE);
+        cardPanel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createEmptyBorder(32, 32, 32, 32),
+            BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200), 1, true),
+                BorderFactory.createEmptyBorder(32, 32, 32, 32)
+            )
+        ));
+        cardPanel.setPreferredSize(new Dimension(480, 420));
+        cardPanel.setMaximumSize(new Dimension(520, 480));
+        cardPanel.setMinimumSize(new Dimension(400, 350));
+        cardPanel.setOpaque(true);
+        cardPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cardPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
+        cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.Y_AXIS));
+
         // Header panel
         JPanel headerPanel = createHeaderPanel();
-        
+        headerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cardPanel.add(headerPanel);
+
         // Form panel
         JPanel formPanel = createFormPanel();
-        
+        formPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cardPanel.add(Box.createVerticalStrut(16));
+        cardPanel.add(formPanel);
+
         // Demo credentials panel
         JPanel demoPanel = createDemoPanel();
-        
-        add(headerPanel, BorderLayout.NORTH);
-        add(formPanel, BorderLayout.CENTER);
-        add(demoPanel, BorderLayout.SOUTH);
+        demoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cardPanel.add(Box.createVerticalStrut(16));
+        cardPanel.add(demoPanel);
+
+        // Drop shadow effect
+        setBorder(BorderFactory.createEmptyBorder(40, 0, 40, 0));
+        cardPanel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createMatteBorder(1, 1, 8, 8, new Color(220, 220, 220, 180)),
+            cardPanel.getBorder()
+        ));
+
+        add(cardPanel);
     }
     
     private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel();
         headerPanel.setBackground(new Color(139, 69, 19)); // Coffee brown
         headerPanel.setPreferredSize(new Dimension(400, 80));
+        headerPanel.setMaximumSize(new Dimension(480, 80));
         
         JLabel titleLabel = new JLabel("☕ Coffee Shop POS");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        headerPanel.add(titleLabel);
-        
+        headerPanel.setLayout(new BorderLayout());
+        headerPanel.add(titleLabel, BorderLayout.CENTER);
         return headerPanel;
     }
     
     private JPanel createFormPanel() {
         JPanel formPanel = new JPanel(new GridBagLayout());
-        formPanel.setBackground(new Color(245, 245, 245));
+        formPanel.setBackground(Color.WHITE);
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 10, 5, 10);
+        gbc.insets = new Insets(10, 16, 10, 16);
         
         // Username field
         JLabel userLabel = new JLabel("Username:");
-        userLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        userLabel.setFont(new Font("Arial", Font.BOLD, 18));
         gbc.gridx = 0; gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
         formPanel.add(userLabel, gbc);
         
-        usernameField = new JTextField(20);
-        usernameField.setFont(new Font("Arial", Font.PLAIN, 14));
+        usernameField = new JTextField(22);
+        usernameField.setFont(new Font("Arial", Font.PLAIN, 18));
+        usernameField.setPreferredSize(new Dimension(220, 36));
         gbc.gridx = 1; gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         formPanel.add(usernameField, gbc);
         
         // Password field
         JLabel passLabel = new JLabel("Password:");
-        passLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        passLabel.setFont(new Font("Arial", Font.BOLD, 18));
         gbc.gridx = 0; gbc.gridy = 1;
         gbc.fill = GridBagConstraints.NONE;
         formPanel.add(passLabel, gbc);
         
-        passwordField = new JPasswordField(20);
-        passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
+        passwordField = new JPasswordField(22);
+        passwordField.setFont(new Font("Arial", Font.PLAIN, 18));
+        passwordField.setPreferredSize(new Dimension(220, 36));
         gbc.gridx = 1; gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         formPanel.add(passwordField, gbc);
         
         // Status label
         statusLabel = new JLabel("Enter your credentials to login");
-        statusLabel.setFont(new Font("Arial", Font.ITALIC, 12));
+        statusLabel.setFont(new Font("Arial", Font.ITALIC, 14));
         statusLabel.setForeground(Color.GRAY);
         statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
         gbc.gridx = 0; gbc.gridy = 2;
@@ -93,11 +126,11 @@ public class LoginPanel extends JPanel {
         
         // Login button
         loginBtn = new JButton("Login");
-        loginBtn.setFont(new Font("Arial", Font.BOLD, 14));
+        loginBtn.setFont(new Font("Arial", Font.BOLD, 18));
         loginBtn.setBackground(new Color(34, 139, 34)); // Green
         loginBtn.setForeground(Color.WHITE);
         loginBtn.setFocusPainted(false);
-        loginBtn.setPreferredSize(new Dimension(120, 35));
+        loginBtn.setPreferredSize(new Dimension(180, 44));
         gbc.gridx = 0; gbc.gridy = 3;
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.NONE;
