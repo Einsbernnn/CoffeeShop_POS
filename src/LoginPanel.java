@@ -1,6 +1,6 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class LoginPanel extends JPanel {
     private JTextField usernameField;
@@ -166,6 +166,7 @@ public class LoginPanel extends JPanel {
 
         if (user.isEmpty() || pass.isEmpty()) {
             setStatus("Please enter both username and password", Color.RED);
+            ActivityLogger.log(user, "LOGIN_FAILED", "Missing username or password");
             return;
         }
 
@@ -173,12 +174,13 @@ public class LoginPanel extends JPanel {
         if (authenticatedUser != null) {
             setStatus("Login successful! Opening POS...", new Color(34, 139, 34));
             loginBtn.setEnabled(false);
-            
+            ActivityLogger.log(user, "LOGIN_SUCCESS");
             if (loginListener != null) {
                 loginListener.onLoginSuccess(authenticatedUser);
             }
         } else {
             setStatus("Invalid username or password", Color.RED);
+            ActivityLogger.log(user, "LOGIN_FAILED", "Invalid credentials");
             passwordField.setText("");
             passwordField.requestFocus();
         }

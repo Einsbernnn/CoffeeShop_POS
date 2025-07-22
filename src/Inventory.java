@@ -34,17 +34,20 @@ public class Inventory {
     
     public void updateStock(String itemName, int quantity) {
         stockLevels.put(itemName, quantity);
+        ActivityLogger.log("SYSTEM", "INVENTORY_UPDATE", itemName + " set to " + quantity);
     }
     
     public void addStock(String itemName, int quantity) {
         int currentStock = stockLevels.getOrDefault(itemName, 0);
         stockLevels.put(itemName, currentStock + quantity);
+        ActivityLogger.log("SYSTEM", "INVENTORY_ADD", itemName + " +" + quantity);
     }
     
     public void removeStock(String itemName, int quantity) {
         int currentStock = stockLevels.getOrDefault(itemName, 0);
         int newStock = Math.max(0, currentStock - quantity);
         stockLevels.put(itemName, newStock);
+        ActivityLogger.log("SYSTEM", "INVENTORY_REMOVE", itemName + " -" + quantity);
     }
     
     public int getStock(String itemName) {

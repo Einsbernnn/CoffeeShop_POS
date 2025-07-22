@@ -1,5 +1,3 @@
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -7,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class POSMain extends JFrame {
     private JTable cartTable;
@@ -380,6 +380,9 @@ public class POSMain extends JFrame {
         }
         
         orderHistory.add(order);
+        
+        // Log sale
+        ActivityLogger.log(currentUser, "SALE", "Order#" + order.getOrderNumber() + ", Total: ₱" + order.getTotal());
         
         // Update daily stats
         dailySales += totalAmount;
