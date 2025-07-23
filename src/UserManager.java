@@ -4,6 +4,7 @@ import java.util.Map;
 public class UserManager {
     private static UserManager instance;
     private Map<String, User> users;
+    private final Map<String, User> activeUsers = new HashMap<>();
     
     private UserManager() {
         users = new HashMap<>();
@@ -78,5 +79,28 @@ public class UserManager {
     public boolean isManager(String username) {
         User user = users.get(username);
         return user != null && (user.getRole() == UserRole.MANAGER || user.getRole() == UserRole.ADMIN);
+    }
+
+    /**
+     * Marks a user as logged in (present).
+     */
+    public void userLoggedIn(User user) {
+        if (user != null) {
+            activeUsers.put(user.getUsername(), user);
+        }
+    }
+
+    /**
+     * Marks a user as logged out (not present).
+     */
+    public void userLoggedOut(String username) {
+        activeUsers.remove(username);
+    }
+
+    /**
+     * Returns a copy of the currently active (present) users.
+     */
+    public Map<String, User> getActiveUsers() {
+        return new HashMap<>(activeUsers);
     }
 } 

@@ -203,8 +203,10 @@ public class LoginPanel extends JPanel {
             return;
         }
 
-        User authenticatedUser = UserManager.getInstance().authenticateUser(user, pass);
+        UserManager userManager = UserManager.getInstance();
+        User authenticatedUser = userManager.authenticateUser(user, pass);
         if (authenticatedUser != null) {
+            userManager.userLoggedIn(authenticatedUser); // Track presence
             setStatus("Login successful! Opening POS...", new Color(34, 139, 34));
             loginBtn.setEnabled(false);
             ActivityLogger.log(user, "LOGIN_SUCCESS");
@@ -214,6 +216,9 @@ public class LoginPanel extends JPanel {
         } else {
             setStatus("Invalid username or password", Color.RED);
             ActivityLogger.log(user, "LOGIN_FAILED", "Invalid credentials");
+            if (loginListener != null) {
+                loginListener.onLoginFailure("Invalid username or password");
+            }
             passwordField.setText("");
             passwordField.requestFocus();
         }

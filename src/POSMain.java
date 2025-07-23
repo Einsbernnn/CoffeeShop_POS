@@ -47,6 +47,14 @@ public class POSMain extends JFrame {
 
         initComponents();
         setVisible(true);
+
+        // Add window listener for logout
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                UserManager.getInstance().userLoggedOut(currentUser);
+            }
+        });
     }
 
     private void initComponents() {
@@ -63,6 +71,10 @@ public class POSMain extends JFrame {
         // Inventory Tab
         JPanel inventoryPanel = createInventoryPanel();
         mainTabbedPane.addTab("Inventory", inventoryPanel);
+        
+        // Add presence/role manager tab
+        JPanel presencePanel = createPresencePanel();
+        mainTabbedPane.addTab("Active Users", presencePanel);
         
         add(mainTabbedPane, BorderLayout.CENTER);
         
@@ -223,6 +235,36 @@ public class POSMain extends JFrame {
         addStockButton.addActionListener(e -> addStock());
         lowStockButton.addActionListener(e -> showLowStockAlert());
         
+        return panel;
+    }
+
+    private JPanel createPresencePanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBorder(BorderFactory.createTitledBorder("Active Users (Presence)"));
+
+        String[] columns = {"Username", "Display Name", "Role"};
+        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(columns, 0);
+        JTable table = new JTable(model);
+
+        // Populate table with active users
+        Map<String, User> activeUsers = UserManager.getInstance().getActiveUsers();
+        for (User user : activeUsers.values()) {
+            model.addRow(new Object[]{user.getUsername(), user.getDisplayName(), user.getRole().getDisplayName()});
+        }
+
+        panel.add(new JScrollPane(table), BorderLayout.CENTER);
+
+        // Refresh button
+        JButton refreshBtn = new JButton("Refresh");
+        refreshBtn.addActionListener(e -> {
+            model.setRowCount(0);
+            Map<String, User> refreshed = UserManager.getInstance().getActiveUsers();
+            for (User user : refreshed.values()) {
+                model.addRow(new Object[]{user.getUsername(), user.getDisplayName(), user.getRole().getDisplayName()});
+            }
+        });
+        panel.add(refreshBtn, BorderLayout.SOUTH);
+
         return panel;
     }
 
