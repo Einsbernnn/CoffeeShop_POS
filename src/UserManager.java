@@ -5,6 +5,7 @@ public class UserManager {
     private static UserManager instance;
     private Map<String, User> users;
     private final Map<String, User> activeUsers = new HashMap<>();
+    private Map<String, String> rfidToUsername = new HashMap<>(); // tagId -> username
     
     private UserManager() {
         users = new HashMap<>();
@@ -23,6 +24,11 @@ public class UserManager {
         users.put("cashier", new User("cashier", "5678", "Cashier", UserRole.CASHIER));
         users.put("manager", new User("manager", "9999", "Manager", UserRole.MANAGER));
         users.put("barista", new User("barista", "1111", "Barista", UserRole.BARISTA));
+        // Demo RFID tag assignments (replace with real tag IDs)
+        rfidToUsername.put("TAG123456", "admin");
+        rfidToUsername.put("TAG234567", "cashier");
+        rfidToUsername.put("TAG345678", "manager");
+        rfidToUsername.put("TAG456789", "barista");
     }
     
     public User authenticateUser(String username, String password) {
@@ -102,5 +108,19 @@ public class UserManager {
      */
     public Map<String, User> getActiveUsers() {
         return new HashMap<>(activeUsers);
+    }
+
+    public User authenticateRFID(String tagId) {
+        String username = rfidToUsername.get(tagId);
+        if (username != null) {
+            return users.get(username);
+        }
+        return null;
+    }
+
+    public void registerRFIDTag(String tagId, String username) {
+        if (users.containsKey(username)) {
+            rfidToUsername.put(tagId, username);
+        }
     }
 } 

@@ -7,7 +7,9 @@ public class LoginPanel extends JPanel {
     private JPasswordField passwordField;
     private JLabel statusLabel;
     private JButton loginBtn;
+    private JButton rfidLoginBtn;
     private LoginListener loginListener;
+    private RFIDReader rfidReader;
     
     public interface LoginListener {
         void onLoginSuccess(User user);
@@ -136,7 +138,20 @@ public class LoginPanel extends JPanel {
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
         formPanel.add(loginBtn, gbc);
-        
+
+        // RFID login button
+        rfidLoginBtn = new JButton("RFID Login");
+        rfidLoginBtn.setFont(new Font("Arial", Font.BOLD, 16));
+        rfidLoginBtn.setBackground(new Color(70, 130, 180)); // Steel blue
+        rfidLoginBtn.setForeground(Color.WHITE);
+        rfidLoginBtn.setFocusPainted(false);
+        rfidLoginBtn.setPreferredSize(new Dimension(180, 36));
+        gbc.gridx = 0; gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        formPanel.add(rfidLoginBtn, gbc);
+
         setupEventListeners();
         
         return formPanel;
@@ -163,6 +178,7 @@ public class LoginPanel extends JPanel {
     
     private void setupEventListeners() {
         loginBtn.addActionListener(e -> performLogin());
+        rfidLoginBtn.addActionListener(e -> performRFIDLogin());
         
         // Enter key listener
         KeyAdapter enterListener = new KeyAdapter() {
@@ -222,6 +238,42 @@ public class LoginPanel extends JPanel {
             passwordField.setText("");
             passwordField.requestFocus();
         }
+    }
+
+    private void performRFIDLogin() {
+        setStatus("Waiting for RFID tag...", Color.BLUE);
+        rfidLoginBtn.setEnabled(false);
+        // Example port name: "/dev/ttyUSB0" or "COM3". User should configure this.
+        String portName = "COM3"; // TODO: Make configurable
+        rfidReader = new RFIDReader(portName, new RFIDReader.RFIDListener() {
+            @Override
+            public void onTagScanned(String tagId) {
+                SwingUtilities.invokeLater(() -> {
+                    setStatus("RFID tag detected: " + tagId, new Color(34, 139, 34));
+                    UserManager userManager = UserManager.getInstance();
+                    User user = userManager.authenticateRFID(tagId);
+                    if (user != null) {
+                        userManager.userLoggedIn(user);
+                        ActivityLogger.log(user.getUsername(), "LOGIN_SUCCESS", "RFID");
+                        if (loginListener != null) loginListener.onLoginSuccess(user);
+                    } else {
+                        setStatus("Unknown RFID tag", Color.RED);
+                        ActivityLogger.log("RFID", "LOGIN_FAILED", "Unknown tag: " + tagId);
+                        if (loginListener != null) loginListener.onLoginFailure("Unknown RFID tag");
+                    }
+                    rfidLoginBtn.setEnabled(true);
+                    if (rfidReader != null) rfidReader.close();
+                });
+            }
+            @Override
+            public void onError(String message) {
+                SwingUtilities.invokeLater(() -> {
+                    setStatus("RFID Error: " + message, Color.RED);
+                    rfidLoginBtn.setEnabled(true);
+                    if (rfidReader != null) rfidReader.close();
+                });
+            }
+        });
     }
     
     public void setStatus(String message, Color color) {
