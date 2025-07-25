@@ -16,7 +16,7 @@ public class POSMain extends JFrame {
     private String currentUser;
     private LocalDateTime shiftStart;
     private double dailySales = 0.0;
-    private int dailyOrders = 0;
+    private int dailyOrders = 1; //0 back to 0 this
     
     // UI Components
     private JComboBox<String> paymentMethodCombo;
