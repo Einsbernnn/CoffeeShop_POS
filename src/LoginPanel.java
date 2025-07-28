@@ -151,7 +151,7 @@ public class LoginPanel extends JPanel {
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
         formPanel.add(rfidLoginBtn, gbc);
-
+        
         setupEventListeners();
         
         return formPanel;
