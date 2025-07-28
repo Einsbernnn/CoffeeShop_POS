@@ -12,11 +12,11 @@ public class POSMain extends JFrame {
     private JTable cartTable;
     private DefaultTableModel tableModel;
     private JLabel totalLabel, userLabel, shiftLabel;
-    private double totalAmount = 0.1; //0
+    private double totalAmount = 0.0; //0
     private String currentUser;
     private LocalDateTime shiftStart;
-    private double dailySales = 0.1; //0
-    private int dailyOrders = 1; //0 back to 0 this
+    private double dailySales = 0.0; //0
+    private int dailyOrders = 0; //0 back to 0 this
     
     // UI Components
     private JComboBox<String> paymentMethodCombo;
