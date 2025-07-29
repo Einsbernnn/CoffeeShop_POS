@@ -35,5 +35,12 @@ public class RFIDReader /* implements SerialPortEventListener */ {
     // Uncomment and implement if you have a serial library
     // private void initialize(String portName) { ... }
     // public void serialEvent(SerialPortEvent oEvent) { ... }
-    // public void close() { ... }
+    
+    public void close() {
+        // Uncomment and implement if you have a serial library
+        // if (serialPort != null) {
+        //     serialPort.removeEventListener();
+        //     serialPort.close();
+        // }
+    }
 } 
