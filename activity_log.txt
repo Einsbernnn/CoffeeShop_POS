@@ -1,0 +1,6 @@
+[2025-07-29 12:34:12] User: a | Action: LOGIN_FAILED | Details: Missing username or password
+[2025-07-29 12:34:16] User: admin | Action: LOGIN_SUCCESS | Details: 
+[2025-07-30 22:04:00] User: admin | Action: LOGIN_SUCCESS | Details: 
+[2025-07-30 22:05:32] User: admin | Action: SALE | Details: Order#ORD2412, Total: ₱2225.0
+[2025-07-30 22:05:47] User: admin | Action: SALE | Details: Order#ORD7796, Total: ₱160.0
+[2025-07-30 22:11:20] User: admin | Action: LOGIN_SUCCESS | Details: 

@@ -40,6 +40,13 @@ public class LoginPanel extends JPanel {
         cardPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
         cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.Y_AXIS));
 
+        // Clock panel (upper left)
+        JPanel clockRow = new JPanel(new BorderLayout());
+        clockRow.setOpaque(false);
+        clockRow.add(new ClockPanel(), BorderLayout.WEST);
+        clockRow.setMaximumSize(new Dimension(480, 28));
+        cardPanel.add(clockRow);
+
         // Header panel
         JPanel headerPanel = createHeaderPanel();
         headerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);

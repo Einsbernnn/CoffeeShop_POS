@@ -40,7 +40,7 @@ public class POSMain extends JFrame {
         this.inventory = new Inventory();
         this.orderHistory = new ArrayList<>();
         
-        setTitle("Coffee Shop POS - " + username + " | Shift: " + shiftStart.format(DateTimeFormatter.ofPattern("MM/dd HH:mm")));
+        setTitle("Coffee Shop POS - " + username + " | Shift Time: " + shiftStart.format(DateTimeFormatter.ofPattern("MM/dd HH:mm")));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLayout(new BorderLayout());
@@ -86,6 +86,12 @@ public class POSMain extends JFrame {
     private JPanel createPOSPanel() {
         JPanel posPanel = new JPanel(new BorderLayout());
         
+        // === Top bar with clock ===
+        JPanel topBar = new JPanel(new BorderLayout());
+        topBar.setOpaque(false);
+        topBar.add(new ClockPanel(), BorderLayout.WEST);
+        posPanel.add(topBar, BorderLayout.NORTH);
+        
         // === Top Control Panel ===
         JPanel topPanel = new JPanel(new BorderLayout());
         
@@ -100,7 +106,7 @@ public class POSMain extends JFrame {
         inputPanel.add(new JLabel("Price:"));
         inputPanel.add(productPriceField);
         
-        JButton addButton = new JButton("Add to Cart");
+        JButton addButton = new JButton("Check Out!");
         inputPanel.add(addButton);
         
         // Right: Customization Panel
@@ -174,6 +180,11 @@ public class POSMain extends JFrame {
 
     private JPanel createReportsPanel() {
         JPanel panel = new JPanel(new BorderLayout());
+        // Add clock to top
+        JPanel topBar = new JPanel(new BorderLayout());
+        topBar.setOpaque(false);
+        topBar.add(new ClockPanel(), BorderLayout.WEST);
+        panel.add(topBar, BorderLayout.NORTH);
         
         // Sales Summary
         JPanel summaryPanel = new JPanel(new GridLayout(2, 3, 10, 10));
@@ -207,6 +218,11 @@ public class POSMain extends JFrame {
 
     private JPanel createInventoryPanel() {
         JPanel panel = new JPanel(new BorderLayout());
+        // Add clock to top
+        JPanel topBar = new JPanel(new BorderLayout());
+        topBar.setOpaque(false);
+        topBar.add(new ClockPanel(), BorderLayout.WEST);
+        panel.add(topBar, BorderLayout.NORTH);
         
         // Inventory Table
         String[] columns = {"Item", "Current Stock", "Min Stock", "Status"};
@@ -240,6 +256,11 @@ public class POSMain extends JFrame {
 
     private JPanel createPresencePanel() {
         JPanel panel = new JPanel(new BorderLayout());
+        // Add clock to top
+        JPanel topBar = new JPanel(new BorderLayout());
+        topBar.setOpaque(false);
+        topBar.add(new ClockPanel(), BorderLayout.WEST);
+        panel.add(topBar, BorderLayout.NORTH);
         panel.setBorder(BorderFactory.createTitledBorder("Active Users (Presence)"));
 
         String[] columns = {"Username", "Display Name", "Role"};
