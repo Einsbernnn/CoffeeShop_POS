@@ -229,12 +229,29 @@ public class LoginPanel extends JPanel {
         UserManager userManager = UserManager.getInstance();
         User authenticatedUser = userManager.authenticateUser(user, pass);
         if (authenticatedUser != null) {
-            userManager.userLoggedIn(authenticatedUser); // Track presence
-            setStatus("Login successful! Opening POS...", new Color(34, 139, 34));
-            loginBtn.setEnabled(false);
-            ActivityLogger.log(user, "LOGIN_SUCCESS");
-            if (loginListener != null) {
-                loginListener.onLoginSuccess(authenticatedUser);
+            // Prompt for user's name
+            NamePromptDialog nameDialog = new NamePromptDialog(
+                (JFrame) SwingUtilities.getWindowAncestor(this),
+                authenticatedUser.getUsername(),
+                authenticatedUser.getRole().getDisplayName()
+            );
+            
+            nameDialog.setVisible(true);
+            
+            if (nameDialog.isConfirmed()) {
+                String enteredName = nameDialog.getEnteredName();
+                authenticatedUser.setDisplayName(enteredName);
+                
+                userManager.userLoggedIn(authenticatedUser); // Track presence
+                setStatus("Login successful! Opening POS...", new Color(34, 139, 34));
+                loginBtn.setEnabled(false);
+                ActivityLogger.log(user, "LOGIN_SUCCESS");
+                if (loginListener != null) {
+                    loginListener.onLoginSuccess(authenticatedUser);
+                }
+            } else {
+                setStatus("Login cancelled", Color.ORANGE);
+                loginBtn.setEnabled(true);
             }
         } else {
             setStatus("Invalid username or password", Color.RED);
@@ -260,9 +277,25 @@ public class LoginPanel extends JPanel {
                     UserManager userManager = UserManager.getInstance();
                     User user = userManager.authenticateRFID(tagId);
                     if (user != null) {
-                        userManager.userLoggedIn(user);
-                        ActivityLogger.log(user.getUsername(), "LOGIN_SUCCESS", "RFID");
-                        if (loginListener != null) loginListener.onLoginSuccess(user);
+                        // Prompt for user's name
+                        NamePromptDialog nameDialog = new NamePromptDialog(
+                            (JFrame) SwingUtilities.getWindowAncestor(LoginPanel.this),
+                            user.getUsername(),
+                            user.getRole().getDisplayName()
+                        );
+                        
+                        nameDialog.setVisible(true);
+                        
+                        if (nameDialog.isConfirmed()) {
+                            String enteredName = nameDialog.getEnteredName();
+                            user.setDisplayName(enteredName);
+                            
+                            userManager.userLoggedIn(user);
+                            ActivityLogger.log(user.getUsername(), "LOGIN_SUCCESS", "RFID");
+                            if (loginListener != null) loginListener.onLoginSuccess(user);
+                        } else {
+                            setStatus("Login cancelled", Color.ORANGE);
+                        }
                     } else {
                         setStatus("Unknown RFID tag", Color.RED);
                         ActivityLogger.log("RFID", "LOGIN_FAILED", "Unknown tag: " + tagId);

@@ -56,8 +56,61 @@ public class POSMain extends JFrame {
             }
         });
     }
+    
+    public POSMain(User user) {
+        this.currentUser = user.getUsername();
+        this.shiftStart = LocalDateTime.now();
+        this.productManager = ProductManager.getInstance();
+        this.inventory = new Inventory();
+        this.orderHistory = new ArrayList<>();
+        
+        setTitle("Coffee Shop POS - " + user.getDisplayName() + " | Shift Time: " + shiftStart.format(DateTimeFormatter.ofPattern("MM/dd HH:mm")));
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setLayout(new BorderLayout());
+
+        initComponents(user);
+        setVisible(true);
+
+        // Add window listener for logout
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                UserManager.getInstance().userLoggedOut(currentUser);
+            }
+        });
+    }
 
     private void initComponents() {
+        initComponents(null);
+    }
+    
+    private void initComponents(User user) {
+        // Top header with role display
+        JPanel topHeader = new JPanel(new BorderLayout());
+        topHeader.setBackground(new Color(139, 69, 19)); // Coffee brown
+        topHeader.setPreferredSize(new Dimension(getWidth(), 60));
+        
+        // Clock on the left
+        topHeader.add(new ClockPanel(), BorderLayout.WEST);
+        
+        // Role display on the right
+        RoleDisplayPanel roleDisplay = new RoleDisplayPanel();
+        topHeader.add(roleDisplay, BorderLayout.EAST);
+        
+        // Set the current user for role display
+        if (user != null) {
+            roleDisplay.setCurrentUser(user);
+        } else {
+            UserManager userManager = UserManager.getInstance();
+            User currentUserObj = userManager.getUser(currentUser);
+            if (currentUserObj != null) {
+                roleDisplay.setCurrentUser(currentUserObj);
+            }
+        }
+        
+        add(topHeader, BorderLayout.NORTH);
+        
         mainTabbedPane = new JTabbedPane();
         
         // Main POS Tab

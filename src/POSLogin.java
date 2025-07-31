@@ -15,16 +15,22 @@ public class POSLogin extends JFrame {
     }
 
     private void initComponents() {
-        // Header bar similar to POSMain
-        JPanel headerPanel = new JPanel();
+        // Header bar with role display
+        JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(new Color(139, 69, 19)); // Coffee brown
-        headerPanel.setPreferredSize(new Dimension(400, 80));
+        headerPanel.setPreferredSize(new Dimension(getWidth(), 80));
+        
+        // Title in center
         JLabel titleLabel = new JLabel("☕ Coffee Shop POS");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        headerPanel.setLayout(new BorderLayout());
         headerPanel.add(titleLabel, BorderLayout.CENTER);
+        
+        // Role display on the right (shows "Not logged in" initially)
+        RoleDisplayPanel roleDisplay = new RoleDisplayPanel();
+        headerPanel.add(roleDisplay, BorderLayout.EAST);
+        
         add(headerPanel, BorderLayout.NORTH);
 
         // Center login panel
@@ -34,7 +40,7 @@ public class POSLogin extends JFrame {
             public void onLoginSuccess(User user) {
                 // Simulate loading
                 javax.swing.Timer timer = new javax.swing.Timer(1000, e -> {
-                    new POSMain(user.getUsername());
+                    new POSMain(user);
                     dispose();
                 });
                 timer.setRepeats(false);
