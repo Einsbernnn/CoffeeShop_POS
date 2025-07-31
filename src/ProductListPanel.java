@@ -59,9 +59,7 @@ public class ProductListPanel extends JPanel {
             String price = coffee[1];
             String description = coffee[2];
 
-            JButton button = new JButton("<html><center><b>" + name + "</b><br>₱" + price + 
-                    "<br><small>" + description + "</small></center></html>");
-            styleButton(button, new Color(139, 69, 19)); // Brown color for coffee
+            JButton button = createProductButton(name, price, description, new Color(139, 69, 19));
             double priceVal = Double.parseDouble(price);
 
             button.addActionListener(e -> {
@@ -98,9 +96,7 @@ public class ProductListPanel extends JPanel {
             String price = tea[1];
             String description = tea[2];
 
-            JButton button = new JButton("<html><center><b>" + name + "</b><br>₱" + price + 
-                    "<br><small>" + description + "</small></center></html>");
-            styleButton(button, new Color(34, 139, 34)); // Green color for tea
+            JButton button = createProductButton(name, price, description, new Color(34, 139, 34));
             double priceVal = Double.parseDouble(price);
 
             button.addActionListener(e -> {
@@ -137,9 +133,7 @@ public class ProductListPanel extends JPanel {
             String price = food[1];
             String description = food[2];
 
-            JButton button = new JButton("<html><center><b>" + name + "</b><br>₱" + price + 
-                    "<br><small>" + description + "</small></center></html>");
-            styleButton(button, new Color(255, 215, 0)); // Gold color for food
+            JButton button = createProductButton(name, price, description, new Color(255, 215, 0));
             double priceVal = Double.parseDouble(price);
 
             button.addActionListener(e -> {
@@ -176,9 +170,7 @@ public class ProductListPanel extends JPanel {
             String price = dessert[1];
             String description = dessert[2];
 
-            JButton button = new JButton("<html><center><b>" + name + "</b><br>₱" + price + 
-                    "<br><small>" + description + "</small></center></html>");
-            styleButton(button, new Color(255, 182, 193)); // Pink color for desserts
+            JButton button = createProductButton(name, price, description, new Color(255, 182, 193));
             double priceVal = Double.parseDouble(price);
 
             button.addActionListener(e -> {
@@ -215,9 +207,7 @@ public class ProductListPanel extends JPanel {
             String price = drink[1];
             String description = drink[2];
 
-            JButton button = new JButton("<html><center><b>" + name + "</b><br>₱" + price + 
-                    "<br><small>" + description + "</small></center></html>");
-            styleButton(button, new Color(135, 206, 235)); // Sky blue color for drinks
+            JButton button = createProductButton(name, price, description, new Color(135, 206, 235));
             double priceVal = Double.parseDouble(price);
 
             button.addActionListener(e -> {
@@ -230,6 +220,53 @@ public class ProductListPanel extends JPanel {
         return panel;
     }
 
+    private JButton createProductButton(String name, String price, String description, Color backgroundColor) {
+        JButton button = new JButton();
+        button.setLayout(new BorderLayout());
+        button.setBackground(backgroundColor);
+        button.setForeground(Color.WHITE);
+        button.setFont(new Font("Arial", Font.BOLD, 12));
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createRaisedBevelBorder());
+        button.setPreferredSize(new Dimension(150, 150));
+        
+        // Get product image
+        ProductManager productManager = ProductManager.getInstance();
+        Product product = productManager.getProduct(name);
+        ImageIcon productImage = null;
+        if (product != null) {
+            productImage = product.getImageIcon();
+        }
+        
+        // Create image label
+        JLabel imageLabel = new JLabel(productImage);
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        imageLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        
+        // Create text label
+        JLabel textLabel = new JLabel("<html><center><b>" + name + "</b><br>₱" + price + 
+                "<br><small>" + description + "</small></center></html>");
+        textLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        textLabel.setForeground(Color.WHITE);
+        textLabel.setFont(new Font("Arial", Font.BOLD, 10));
+        
+        // Add components to button
+        button.add(imageLabel, BorderLayout.CENTER);
+        button.add(textLabel, BorderLayout.SOUTH);
+        
+        // Add hover effect
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(backgroundColor.brighter());
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(backgroundColor);
+            }
+        });
+        
+        return button;
+    }
+    
     private void styleButton(JButton button, Color backgroundColor) {
         button.setPreferredSize(new Dimension(140, 100));
         button.setFont(new Font("SansSerif", Font.BOLD, 12));

@@ -5,3 +5,5 @@
 [2025-07-30 22:05:47] User: admin | Action: SALE | Details: Order#ORD7796, Total: ₱160.0
 [2025-07-30 22:11:20] User: admin | Action: LOGIN_SUCCESS | Details: 
 [2025-07-30 22:17:31] User: admin | Action: LOGIN_SUCCESS | Details: 
+[2025-07-31 23:00:20] User: admin | Action: LOGIN_SUCCESS | Details: 
+[2025-07-31 23:11:30] User: admin | Action: LOGIN_SUCCESS | Details: 
