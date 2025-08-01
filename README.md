@@ -316,9 +316,9 @@ cp -r images/ backup/
 - **Features**: Submit feature request with use case
 - **Documentation**: Suggest improvements to this README
 
-## 📄 License
+## 📄 Developed By Einsbernnn
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is an opensource project created by Einsbernnn
 
 ## 🙏 Acknowledgments
 
