@@ -7,7 +7,7 @@ A comprehensive Point of Sale (POS) system designed specifically for coffee shop
 ### Core POS Features
 - **Product Management**: Complete menu with categories (Coffee, Tea, Food, Desserts, Drinks)
 - **Order Processing**: Add items to cart, customize orders, and process payments
-- **Payment Methods**: Support for Cash, Card, and Digital Wallet
+- **Payment Methods**: Support for Cash, and Digital Wallet(To Be Added) and Also RFID System using arduino and RC522
 - **Real-time Pricing**: Automatic price calculation with tax and discounts
 - **Order History**: Track all transactions and sales data
 
