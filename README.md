@@ -18,8 +18,8 @@ A comprehensive Point of Sale (POS) system designed specifically for coffee shop
 - **Role-based Access**: Different permissions for different user types
 
 ### Inventory & Reports
-- **Inventory Management**: Track product stock levels
-- **Sales Reports**: Generate detailed sales reports by date
+- **Inventory Management**: Track product stock levels depends on items
+- **Sales Reports**: Generate detailed sales reports by date (Month, Daily, Weekly, and Annualy)
 - **Activity Logging**: Comprehensive audit trail of all system activities
 - **Daily Analytics**: Track daily sales, orders, and performance metrics
 
