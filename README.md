@@ -130,7 +130,7 @@ java -cp . src.POSLogin
 ### Generating Reports
 1. Go to the "Reports" tab
 2. Select report type (Daily Sales, Product Performance, etc.)
-3. Choose date range
+3. Choose date ranges and also times.
 4. Export or print reports
 
 ## 🖼️ Product Images
