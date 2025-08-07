@@ -228,7 +228,7 @@ java -cp . POSLogin
 
 **Images Not Displaying**
 1. Verify images exist in `images/products/`
-2. Check file naming convention
+2. Check file naming convention use png for convience
 3. Ensure file permissions are correct
 4. Restart application after adding images
 
