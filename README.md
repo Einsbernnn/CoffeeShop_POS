@@ -124,7 +124,7 @@ java -cp . src.POSLogin
 ### Managing Inventory
 1. Navigate to the "Inventory" tab
 2. View current stock levels
-3. Update quantities as needed
+3. Update quantities as needed depends on the stack
 4. Monitor low stock alerts
 
 ### Generating Reports
