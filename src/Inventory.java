@@ -14,10 +14,10 @@ public class Inventory {
     private void initializeDefaultInventory() {
         // Coffee shop inventory items
         addItem("Coffee Beans", 100, 20);
-        addItem("Milk", 50, 10);
+        addItem("Milky Matcha", 50, 10);
         addItem("Sugar", 200, 30);
         addItem("Cups", 500, 50);
-        addItem("Espresso Shots", 200, 25);
+        addItem("Espresso Shot", 200, 25);
         addItem("Whipped Cream", 30, 5);
         addItem("Caramel Syrup", 20, 3);
         addItem("Vanilla Syrup", 20, 3);
