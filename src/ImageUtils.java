@@ -128,7 +128,7 @@ public class ImageUtils {
             {"Cheesecake", "Desserts"},
             {"Tiramisu", "Desserts"},
             {"Chocolate Cake", "Desserts"},
-            {"Apple Pie", "Desserts"},
+            {"Apple/Mango Pie", "Desserts"},
             {"Ice Cream", "Desserts"},
             {"Pudding", "Desserts"},
             {"Cupcake", "Desserts"},
