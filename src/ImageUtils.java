@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -140,9 +139,9 @@ public class ImageUtils {
             {"Fruit Tart", "Desserts"},
             
             // Drink products
-            {"Hot Chocolate", "Drinks"},
+            {"Hot Tsokolate", "Drinks"},
             {"Smoothie", "Drinks"},
-            {"Juice", "Drinks"},
+            {"Fruit Flavorred Juice", "Drinks"},
             {"Soda", "Drinks"},
             {"Water", "Drinks"},
             {"Milk", "Drinks"},
