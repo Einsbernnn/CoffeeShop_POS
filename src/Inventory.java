@@ -18,13 +18,13 @@ public class Inventory {
         addItem("Sugar", 0, 30);
         addItem("Cups", 0, 50);
         addItem("Espresso Shot", 0, 25);
-        addItem("Whipped Cream", 30, 5);
-        addItem("Caramel Syrup", 20, 3);
-        addItem("Vanilla Syrup", 20, 3);
-        addItem("Chocolate Syrup", 20, 3);
-        addItem("Tea Bags", 150, 20);
-        addItem("Ice", 1000, 100);
-        addItem("Napkins", 1000, 100);
+        addItem("Whipped Cream", 0, 5);
+        addItem("Caramel Syrup", 0, 3);
+        addItem("Vanilla Syrup", 0, 3);
+        addItem("Chocolate Syrup", 0, 3);
+        addItem("Tea Bags", 0, 20);
+        addItem("Ice", 0, 100);
+        addItem("Napkins", 0, 100);
     }
     
     public void addItem(String itemName, int quantity, int minimumStock) {
