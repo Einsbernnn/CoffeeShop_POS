@@ -80,7 +80,7 @@ public class LoginPanel extends JPanel {
         headerPanel.setPreferredSize(new Dimension(400, 80));
         headerPanel.setMaximumSize(new Dimension(480, 80));
         
-        JLabel titleLabel = new JLabel("☕ Coffee Shop POS");
+        JLabel titleLabel = new JLabel("☕ Coffee Shop Point of Sale");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -97,7 +97,7 @@ public class LoginPanel extends JPanel {
         
         // Username field
         JLabel userLabel = new JLabel("Username:");
-        userLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        userLabel.setFont(new Font("Times New Roman", Font.BOLD, 18));
         gbc.gridx = 0; gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
         formPanel.add(userLabel, gbc);
