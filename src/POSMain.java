@@ -194,6 +194,21 @@ public class POSMain extends JFrame {
             }
         };
         cartTable = new JTable(tableModel);
+        // Update line total and grand total when quantity edited
+        tableModel.addTableModelListener(e -> {
+            if (e.getColumn() == 3 || e.getColumn() == -1) {
+                for (int i = 0; i < tableModel.getRowCount(); i++) {
+                    String unitStr = tableModel.getValueAt(i, 2).toString().replace("₱", "").replace(",", "");
+                    double unit = 0;
+                    try { unit = Double.parseDouble(unitStr); } catch (Exception ignore) {}
+                    int qty = 1;
+                    try { qty = Integer.parseInt(tableModel.getValueAt(i, 3).toString()); } catch (Exception ignore) {}
+                    double line = unit * qty;
+                    tableModel.setValueAt("₱" + currencyFormat.format(line), i, 4);
+                }
+                updateTotal();
+            }
+        });
         JScrollPane tableScrollPane = new JScrollPane(cartTable);
         
         // === Payment Panel ===

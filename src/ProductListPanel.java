@@ -1,9 +1,12 @@
 import java.awt.*;
+import java.util.List;
 import javax.swing.*;
 
 public class ProductListPanel extends JPanel {
     private POSMain mainPOS;
     private JTabbedPane categoryTabs;
+    private JTextField searchField;
+    private JPanel searchResultsPanel;
 
     public ProductListPanel(POSMain posMainRef) {
         this.mainPOS = posMainRef;
@@ -33,6 +36,67 @@ public class ProductListPanel extends JPanel {
         
         // Drinks Tab
         categoryTabs.addTab("🥤 Drinks", createDrinksPanel());
+
+        // Search Tab
+        categoryTabs.addTab("🔎 Search", createSearchPanel());
+    }
+
+    private JPanel createSearchPanel() {
+        JPanel container = new JPanel(new BorderLayout());
+        container.setBackground(Color.WHITE);
+
+        JPanel top = new JPanel(new BorderLayout(5, 5));
+        top.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        searchField = new JTextField();
+        JButton searchButton = new JButton("Search");
+        top.add(new JLabel("Search products:"), BorderLayout.WEST);
+        top.add(searchField, BorderLayout.CENTER);
+        top.add(searchButton, BorderLayout.EAST);
+        container.add(top, BorderLayout.NORTH);
+
+        searchResultsPanel = new JPanel(new GridLayout(0, 3, 10, 10));
+        searchResultsPanel.setBackground(Color.WHITE);
+        JScrollPane scroll = new JScrollPane(searchResultsPanel);
+        container.add(scroll, BorderLayout.CENTER);
+
+        Runnable triggerSearch = () -> {
+            String q = searchField.getText().trim();
+            updateSearchResults(q);
+        };
+        searchButton.addActionListener(e -> triggerSearch.run());
+        searchField.addActionListener(e -> triggerSearch.run());
+
+        return container;
+    }
+
+    private void updateSearchResults(String query) {
+        searchResultsPanel.removeAll();
+        if (query == null || query.isEmpty()) {
+            searchResultsPanel.revalidate();
+            searchResultsPanel.repaint();
+            return;
+        }
+        ProductManager pm = ProductManager.getInstance();
+        List<Product> results = pm.searchProducts(query);
+        for (Product p : results) {
+            JButton button = createProductButton(p.getName(), String.valueOf((int)p.getBasePrice()), p.getDescription(), getCategoryColorFor(p.getCategory()));
+            double priceVal = p.getBasePrice();
+            button.addActionListener(e -> mainPOS.addToCartFromList(p.getName(), priceVal));
+            searchResultsPanel.add(button);
+        }
+        searchResultsPanel.revalidate();
+        searchResultsPanel.repaint();
+    }
+
+    private Color getCategoryColorFor(String category) {
+        switch (category.toLowerCase()) {
+            case "coffee": return new Color(139, 69, 19);
+            case "tea": return new Color(34, 139, 34);
+            case "food": return new Color(255, 215, 0);
+            case "desserts": return new Color(255, 182, 193);
+            case "drinks": return new Color(135, 206, 235);
+            default: return new Color(128, 128, 128);
+        }
     }
 
     private JPanel createCoffeePanel() {
